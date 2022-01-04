@@ -21,6 +21,7 @@ async function run() {
         await client.connect();
         const database = client.db("Mern_Zone");
         const usersCollection = database.collection("users");
+        const postsCollection = database.collection("posts");
 
 
         // Add user into database
@@ -61,7 +62,45 @@ async function run() {
                 isAdmin = true;
             }
             res.json({ admin: isAdmin })
-        })
+        });
+
+
+        // POST API Add (new Post)
+        app.post('/addPost', async (req, res) => {
+            const newPost = req.body;
+            const result = await postsCollection.insertOne(newPost);
+            res.send(result);
+        });
+
+        // get all Post
+        app.get('/posts', async (req, res) => {
+            const cursor = postsCollection.find({});
+            const posts = await cursor.toArray();
+            res.send(posts);
+        });
+        //GET Single Post/Blog API
+        app.get('/blog/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const postItem = await postsCollection.findOne(query);
+            res.send(postItem);
+        });
+
+        // Get My Post/blog
+        app.get("/blogs/:email", async (req, res) => {
+            const result = await postsCollection.find({
+                email: req.params.email,
+            }).toArray();
+            res.send(result);
+        });
+
+        // Delete Post/Blog
+        app.delete('/deleteBlog/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const result = await postsCollection.deleteOne(query);
+            res.send(result)
+        });
 
 
 
