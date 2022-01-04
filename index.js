@@ -81,6 +81,13 @@ async function run() {
 
 
         // Here Your work
+        //GET Single Post/Blog API
+        app.get('/blog/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const postItem = await postsCollection.findOne(query);
+            res.send(postItem);
+        });
 
 
 
