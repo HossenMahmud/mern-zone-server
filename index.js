@@ -96,8 +96,13 @@ async function run() {
             }).toArray();
             res.send(result);
         });
-
-
+      // Delete Post / Blog 
+      app.delete ('/ deleteBlog /: id', async (req, res) => {
+        const id = req.params.id; 
+        const query = {_id: ObjectId (id)} 
+        const result = await postsCollection.deleteOne (query);
+         res.send (result)});
+        
     } finally {
         // await client.close();
     }
