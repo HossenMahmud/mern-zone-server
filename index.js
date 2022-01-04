@@ -89,6 +89,13 @@ async function run() {
             res.send(postItem);
         });
 
+        // Get My Post/blog
+        app.get("/blogs/:email", async (req, res) => {
+            const result = await postsCollection.find({
+                email: req.params.email,
+            }).toArray();
+            res.send(result);
+        });
 
 
     } finally {
