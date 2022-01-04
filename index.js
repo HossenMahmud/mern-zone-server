@@ -78,29 +78,9 @@ async function run() {
             const posts = await cursor.toArray();
             res.send(posts);
         });
-        //GET Single Post/Blog API
-        app.get('/blog/:id', async (req, res) => {
-            const id = req.params.id;
-            const query = { _id: ObjectId(id) };
-            const postItem = await postsCollection.findOne(query);
-            res.send(postItem);
-        });
 
-        // Get My Post/blog
-        app.get("/blogs/:email", async (req, res) => {
-            const result = await postsCollection.find({
-                email: req.params.email,
-            }).toArray();
-            res.send(result);
-        });
 
-        // Delete Post/Blog
-        app.delete('/deleteBlog/:id', async (req, res) => {
-            const id = req.params.id;
-            const query = { _id: ObjectId(id) }
-            const result = await postsCollection.deleteOne(query);
-            res.send(result)
-        });
+        // Here Your work
 
 
 
